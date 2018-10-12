@@ -3,11 +3,20 @@ package main
 import "fmt"
 
 func main() {
+	// Test case 1
 	a := [][]int{
 		{1, 2, 3},
 		{4, 5, 6},
 		{7, 8, 9},
 	}
+
+	// Test case 2
+	// b := [][]int{
+	// 	{1, 2, 3, 4},
+	// 	{5, 6, 7, 8},
+	// 	{9, 10, 11, 12},
+	// 	{13, 14, 15, 16},
+	// }
 	rotateImage(a)
 }
 
@@ -17,12 +26,14 @@ func rotateImage(a [][]int) [][]int {
 	matrixSize := len(a)
 	fmt.Println("flibidy", a[matrixSize-1][0])
 
-	counter := 0
-	for i := 0; i < matrixSize; i++ {
-		for j := 0; j < matrixSize; j++ {
+	// counter := 0
+	for i := 0; i < matrixSize/2; i++ {
+		for j := 0; j <= matrixSize/2; j++ {
 			// Handle the 4 corners
 			// Counter should only be equivalent once per j
-			if i == counter && j == counter {
+			if i == j {
+				fmt.Println("Corners I:", i)
+				fmt.Println("Corners J:", j)
 				temp1 := 0
 				temp2 := 0
 				// Store the top left corner
@@ -40,28 +51,28 @@ func rotateImage(a [][]int) [][]int {
 				// Replace bottom left
 				a[matrixSize-1][0] = temp1
 				// Replace top left with bottom left
-				a[0][0] = temp2
-				counter++
-			} else if j <= j/2 {
-				// fmt.Println("Sanity Check", a[i][j], a[j][i])
-				// Middle terms only need to be moved 1/2 of length
-				// Move the middle terms around
-				// temp1 := a[i][j]
-				// temp2 := a[j][matrixSize-1]
-				// // fmt.Println("fuck", temp1)
-				// // fmt.Println("shit", temp2)
-				// // Replace subsequent numbers
-				// // Right middle
-				// a[j][matrixSize-1] = temp1
-				// // Bottom middle
-				// temp1 = a[matrixSize-1][j]
-				// fmt.Println("fuck", temp1)
-
-				// a[matrixSize-1][j] = temp2
-				// fmt.Println("shit", temp2)
-
-				// // Left middle
-				// temp2 = a[i][j]
+				a[i][i] = temp2
+			} else {
+				// Rotate inner numbers
+				fmt.Println("Middle I:", i)
+				fmt.Println("Middle J:", j)
+				// Store all 4 numbers
+				top := a[i][j]
+				fmt.Println("Sanity Check TOP", top)
+				right := a[j][matrixSize-1]
+				fmt.Println("Sanity Check RIGHT", right)
+				bottom := a[matrixSize-1][j]
+				fmt.Println("Sanity Check BOTTOM", bottom)
+				left := a[j][i]
+				fmt.Println("Sanity Check LEFT", left)
+				// Replace all sides
+				a[i][j] = left
+				// Right
+				a[j][matrixSize-1] = top
+				// Bottom
+				a[matrixSize-1][j] = right
+				// Left
+				a[j][i] = bottom
 
 			}
 
